@@ -3,8 +3,7 @@ server:
 fk:
   rocketmq:
     enable: true
-    namesrv-addr: 192.168.170.129:9876,192.168.170.129:9877
+    namesrv-addr: 192.168.170.129:9876;192.168.170.129:9877
     producer-max-message-size: 2048
-    consumer-consume-thread-min: 1
-    consumer-consume-thread-max: 2
-    producer-retry-times-when-send-failed: 3
+    producer-retry-times-when-send-failed: 3 #发送失败时重试发送3次
+    producer-send-msg-timeout: 5000

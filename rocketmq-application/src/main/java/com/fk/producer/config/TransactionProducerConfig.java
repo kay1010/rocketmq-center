@@ -38,11 +38,11 @@ public class TransactionProducerConfig {
     public TransactionMQProducer payTransactionMQProducer() throws MQClientException {
         TransactionMQProducer transactionMQProducer=new TransactionMQProducer();
        transactionMQProducer.setTransactionListener(paySuccessTransactionListener);
-        transactionMQProducer.setProducerGroup(UUID.randomUUID().toString());
-        transactionMQProducer.setNamesrvAddr(rocketMQProperties.getNamesrvAddr());
-        transactionMQProducer.setMaxMessageSize(rocketMQProperties.getProducerMaxMessageSize());
-        transactionMQProducer.setSendMsgTimeout(rocketMQProperties.getProducerSendMsgTimeout());
-        transactionMQProducer.setRetryTimesWhenSendFailed(rocketMQProperties.getProducerRetryTimesWhenSendFailed());
+        transactionMQProducer.setProducerGroup("pay_group");
+        transactionMQProducer.setNamesrvAddr(rocketMQProperties.getNamesrvAddr());//nameServer地址
+        transactionMQProducer.setMaxMessageSize(rocketMQProperties.getProducerMaxMessageSize());//发送消息内容最大值
+        transactionMQProducer.setSendMsgTimeout(rocketMQProperties.getProducerSendMsgTimeout());//发送消息超时时间
+        transactionMQProducer.setRetryTimesWhenSendFailed(rocketMQProperties.getProducerRetryTimesWhenSendFailed());//发送失败时重试次数
         try {
             transactionMQProducer.start();
             log.info("【RocketMQ payTransactionMQProducer init】 {}", rocketMQProperties.toString());
@@ -64,8 +64,8 @@ public class TransactionProducerConfig {
         transactionMQProducer.setProducerGroup(UUID.randomUUID().toString());
         transactionMQProducer.setNamesrvAddr(rocketMQProperties.getNamesrvAddr());
         transactionMQProducer.setMaxMessageSize(rocketMQProperties.getProducerMaxMessageSize());
-        transactionMQProducer.setSendMsgTimeout(rocketMQProperties.getProducerSendMsgTimeout());
-        transactionMQProducer.setRetryTimesWhenSendFailed(rocketMQProperties.getProducerRetryTimesWhenSendFailed());
+        transactionMQProducer.setSendMsgTimeout(rocketMQProperties.getProducerSendMsgTimeout());//发送消息超时时间
+        transactionMQProducer.setRetryTimesWhenSendFailed(rocketMQProperties.getProducerRetryTimesWhenSendFailed());//发送失败时重试次数
         try {
             transactionMQProducer.start();
             log.info("【RocketMQ cancleOrderTransactionMQProducer init】 {}", rocketMQProperties.toString());

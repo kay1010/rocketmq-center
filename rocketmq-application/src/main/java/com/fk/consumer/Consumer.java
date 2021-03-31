@@ -1,5 +1,6 @@
 package com.fk.consumer;
 
+import com.fk.consumer.messageListenner.ConsumerMessageListenner;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -32,17 +33,23 @@ public class Consumer {
 
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group_01");
 
-        consumer.setNamesrvAddr("192.168.100.133:9876;192.168.100.135:9876");
+        consumer.setNamesrvAddr("192.168.170.129:9876;192.168.170.129:9877");
 
-        consumer.subscribe("Topic1","TagA");
+        consumer.subscribe("PAY_TRANSACTION_TOPIC","*");
+        consumer.setMessageListener(new ConsumerMessageListenner());
 
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                for (MessageExt ext : list) {
-                    System.out.println(new StringBuffer(String.valueOf(ext.getBody())));
-                }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+               try {
+                   for (MessageExt ext : list) {
+                       System.out.println("----------"+new StringBuffer(String.valueOf(ext.getBody())));
+                   }
+                   return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+               }catch (Exception e){
+                   return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+               }
+
             }
         });
         consumer.start();

@@ -22,7 +22,6 @@ public class PaySuccessTransactionListener implements TransactionListener {
             return LocalTransactionState.ROLLBACK_MESSAGE;
         }
     }
-
     @Override
     public LocalTransactionState checkLocalTransaction(MessageExt messageExt) {
         log.info("回调checkLocalTransaction方法事务回查,messageExt: {}",messageExt);
